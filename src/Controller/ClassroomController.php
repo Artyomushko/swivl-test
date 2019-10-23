@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Swagger\Annotations as SWG;
 
 /**
  * Class ClassroomController
@@ -26,6 +27,10 @@ class ClassroomController extends AbstractController
 
     /**
      * @Route("/", name="getAll", methods={"GET"})
+     * @SWG\Response(
+     *     response="200",
+     *     description="OK"
+     * )
      */
     public function index(): Response
     {
@@ -37,6 +42,14 @@ class ClassroomController extends AbstractController
      * @Route("/{id}", name="get", methods={"GET"})
      * @param Classroom $classroom
      * @return Response
+     * @SWG\Response(
+     *     response="200",
+     *     description="OK"
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Not Found"
+     * )
      */
     public function getAction(Classroom $classroom): Response
     {
@@ -48,6 +61,28 @@ class ClassroomController extends AbstractController
      * @param Request $request
      * @return Response
      * @throws BadRequestHttpException
+     *
+     * @SWG\Parameter(
+     *     name="name",
+     *     required=true,
+     *     in="formData",
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="isActive",
+     *     required=false,
+     *     in="formData",
+     *     type="boolean",
+     *     default="true"
+     * )
+     * @SWG\Response(
+     *     response="201",
+     *     description="Created"
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="Bad Request"
+     * )
      */
     public function postAction(Request $request): Response
     {
@@ -73,6 +108,29 @@ class ClassroomController extends AbstractController
      * @param Classroom $classroom
      * @param Request $request
      * @return Response
+     * @SWG\Parameter(
+     *     name="name",
+     *     in="formData",
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="isActive",
+     *     required=false,
+     *     in="formData",
+     *     type="boolean"
+     * )
+     * @SWG\Response(
+     *     response="200",
+     *     description="OK"
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="Bad Request"
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Not Found"
+     * )
      */
     public function putAction(Classroom $classroom, Request $request): Response
     {
@@ -98,6 +156,14 @@ class ClassroomController extends AbstractController
      * @Route("/{id}", name="delete", methods={"DELETE"})
      * @param Classroom $classroom
      * @return Response
+     * @SWG\Response(
+     *     response="200",
+     *     description="OK"
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Not Found"
+     * )
      */
     public function deleteAction(Classroom $classroom): Response
     {
