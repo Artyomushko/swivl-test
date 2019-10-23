@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClassroomRepository")
@@ -17,17 +19,20 @@ class Classroom
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=31)
      */
     private $name;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     * @ORM\Column(type="boolean", options={"default":true})
      */
     private $isActive;
 
@@ -53,21 +58,14 @@ class Classroom
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getIsActive(): ?bool
     {
         return $this->isActive;
     }
 
-    public function setIsActive(bool $isActive): self
+    public function setIsActive(?bool $isActive): self
     {
-        $this->isActive = $isActive;
+        $this->isActive = $isActive ?? true;
 
         return $this;
     }

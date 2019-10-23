@@ -9,3 +9,9 @@
 ###< symfony/framework-bundle ###
 /Homestead.yaml
 /.vagrant/
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
